@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
     console.log('Visar user-lista', users);
     res.send(users);
   } catch (error) {
-    console.log('Detta är vad vi får tillbaka i user-listan', error);
-    res.status(500).send('Ett fel inträffade med att hämta användarna.');
+    console.log('Detta man får tillbaka i user-listan', error);
+    res.status(500).send('Ett fel inträffade.');
   }
 });
 
@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
   const userPassword = req.body.password;
 
   if (!req.body || !username || !userPassword) {
-    res.status(400).send('Användaruppgifter ofullständiga.');
+    res.status(400).send('Användaruppgifter stämmer Ej.');
     return;
   }
 

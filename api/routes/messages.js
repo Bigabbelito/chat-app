@@ -1,78 +1,123 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-
+import express from "express";
+import { getDb } from "../data/database.js";
 const router = express.Router();
-const adapter = new FileSync('db.json');
-const db = low(adapter);
+const db = getDb();
 
-// Middleware för att autentisera JWT-token
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  
-  if (token == null) {
-    return res.sendStatus(401);
-  }
-  
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.sendStatus(403);
+
+router.post("/:channelName", async (req, res) => {
+    const channelName = req.params.channelName.toLowerCase();
+    const message = req.body.message;
+    const userId = req.body.userId;
+
+
+    try {
+        await db.read();
+        const channels = db.data.channels;
+
+        let foundChannel = null;
+        channels.forEach((channel) => {
+            const channelKey = Object.keys(channel)[0]
+            if(channelKey.toLowerCase() === channelName){
+                foundChannel=channel[channelKey]
+            }
+        })
+
+        if (!foundChannel) {
+            console.log("POST /:channelName " + channelName + " not found.");
+            res.status(404).json({
+                error: "Channel not found",
+                message: `The channel '${channelName}' was not found.`,
+            });
+            return;
+        }
+
+        const newMessage = {
+            userId: userId,
+            timestamp: req.timestamp,
+            message: message,
+        };
+
+        foundChannel.push(newMessage);
+        await db.write();
+        res.status(200).json({
+            message: "Meddelandet har skickats till kanalen",
+            data: newMessage,
+        });
+    } catch (error) {
+        console.error("Fel vid skickande av meddelandet:", error);
+        res.status(500).json({
+            error: "Server error",
+            message: "An error occurred while sending the message.",
+        });
     }
-    
-    req.user = user;
-    next();
-  });
-};
-
-// GET /api/channels/:channelId/messages
-router.get('/channels/:channelId/messages', authenticateToken, (req, res) => {
-  const channelId = req.params.channelId;
-  const messages = db.get('channels')
-                    .find({ id: channelId })
-                    .get('messages')
-                    .value();
-
-  res.json({ messages: messages });
 });
 
-// POST /api/channels/:channelId/messages
-router.post('/channels/:channelId/messages', authenticateToken, (req, res) => {
-  const channelId = req.params.channelId;
-  const message = req.body.message;
 
-  // Spara meddelandet i databasen
-  db.get('channels')
-    .find({ id: channelId })
-    .get('messages')
-    .push({ text: message, timestamp: Date.now(), userId: req.user.id })
-    .write();
+router.put("/:channelName", async(req, res) => {
+    const channelName = req.params.channelName.toLowerCase();
+    const timeStamp = req.body.timestamp
+    const editedMessage = req.body.message
+    await db.read()
 
-  res.json({ message: message });
-});
+    try{
 
-// POST /api/users/:userId/messages
-router.post('/users/:userId/messages', authenticateToken, (req, res) => {
-  const userId = req.params.userId;
-  const message = req.body.message;
+        const channels = db.data.channels;
+        
+        let foundChannel = null;
+        channels.forEach((channel) => {
+            const channelKey = Object.keys(channel)[0]
+            if(channelKey.toLowerCase() === channelName){
+                foundChannel=channel[channelKey]
+            }
+        })
+        
+        if (!foundChannel) {
+            console.log("POST /:channelName " + channelName + " not found.");
+            res.status(404).json({
+                error: "Channel not found",
+                message: `The channel '${channelName}' was not found.`,
+            });
+            return;
+        }
 
-  // Spara meddelandet i databasen
-  db.get('directMessages')
-    .push({ text: message, timestamp: Date.now(), senderId: req.user.id, receiverId: userId })
-    .write();
 
-  res.json({ message: message });
-});
+        let foundMessage = null;
+        let foundIndex = -1;
+        foundChannel.forEach((message, index)=>{
+            if (message.timestamp === timeStamp){
+                foundMessage = message;
+                foundIndex = index
+            }
 
-// GET /api/users/:userId/messages
-router.get('/users/:userId/messages', authenticateToken, (req, res) => {
-  const userId = req.params.userId;
-  const messages = db.get('directMessages')
-                    .filter(message => message.senderId === req.user.id && message.receiverId === userId)
-                    .value();
+        })
 
-  res.json({ messages: messages });
-});
+        if (!foundMessage) {
+            console.log("PUT /:channelName " + channelName + " message not found.");
+            res.status(404).json({
+                error: "Message not found",
+                message: "The specified message was not found in the channel.",
+            });
+            return;
+        }
 
-module.exports = router;
+        foundMessage = { ...foundMessage, message: editedMessage }
+        foundChannel[foundIndex] = foundMessage
+
+        await db.write()
+        res.status(200).json({
+            message: "Meddelandet har uppdaterats i kanalen",
+            data: foundMessage
+        })
+
+    }catch (error){
+        console.error("Fel vid uppdatering av meddelandet");
+        res.status(500).json({
+            error: "Server error",
+            message: "An error occurred while updating the message.",
+        });
+    }
+})
+
+
+
+export default router;

@@ -1,16 +1,16 @@
-const path = require('path');
-const { fileURLToPath } = require('url');
-const { Low } = require('lowdb');
-const { JSONFile } = require('lowdb/adapters');
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { Low } from 'lowdb'
+import { JSONFile } from 'lowdb/node'
 
 function getDb() {
-  // Skapa sökväg till databasen
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const file = path.join(__dirname, 'db.json');
-  const adapter = new JSONFile(file);
-  const db = new Low(adapter);
-  // {} är default data
-  return db;
+	// Skapa sökväg till databasen
+	const __dirname = dirname(fileURLToPath(import.meta.url))
+	const file = join(__dirname, 'db.json')
+	const adapter = new JSONFile(file)
+	const db = new Low(adapter, {})
+	// {} är default data
+	return db
 }
 
-module.exports = { getDb };
+export { getDb }

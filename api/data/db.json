@@ -11,23 +11,6 @@
         "password": "password"
       }
     ],
-    "channels": [
-      {
-        "procode": []
-          },
-      {
-        "gaming": [
-          {
-            "userId": 1,
-            "timestamp": 1686237621146,
-            "message": "Detta är ett test"
-          }
-        ]
-      },
-    
-      {
-        "coding" : []
-      }
-    ]
+    "channels": []
   }
 
