@@ -30,8 +30,8 @@ const ChannelsList = () => {
     const [chatUsers, setUsers] = useRecoilState(userList);
     const [channelNamesList] = useRecoilState(channelNames);
     const [channelUrl, setChannelUrl] = useState();
-    const [activChannel, setActivChannel] = useRecoilState(activeChannelName);
-    const [errorMessage, setErrorMessage] = useRecoilState(authorizationError);
+    const [ setActivChannel] = useRecoilState(activeChannelName);
+    const [ setErrorMessage] = useRecoilState(authorizationError);
     const [isLogdin] = useRecoilState(logdin);
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const ChannelsList = () => {
     useEffect(() => {
         getAllUsers();
         existedChannelNames();
-    }, []);
+    },[]);
 
     const getChannelinfo = async (whichChannel) => {
         try {

@@ -24,7 +24,7 @@ const handleLogin = async (username, password) =>{
         sessionStorage.setItem(sessionStorageKey, data.token)
         sessionStorage.setItem('id', data.id)
         return true
-    }else{
+    } {
         console.log('Login failed: ' + response.status);
         return
 

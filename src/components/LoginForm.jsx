@@ -14,7 +14,7 @@ const LoginForm = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // console.log(userName, userPassword);
+        console.log(userName, userPassword);
 
         try{
             const response = await handleLogin(userName, userPassword)
