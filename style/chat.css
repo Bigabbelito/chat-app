@@ -6,7 +6,7 @@
 .chat-wrapper{
     background: rgb(2,0,36);
     background: linear-gradient(40deg, rgba(2,0,36,1) 0%, rgba(92,92,164,1) 0%, rgba(132,179,255,1) 81%);
-    margin-left: 11em;
+    margin-right: -11em;
     height: 100%;
 
 }

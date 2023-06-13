@@ -10,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     background: rgb(2,0,36);
-    background: #868a0f;
+    background: #504242;
     padding: 1em;
 }
 
@@ -21,7 +21,7 @@
 
 .account-btn{
     padding: .5em;
-    background-color: #98b524;
+    background-color: #4b5425;
     color: white;
     border: none;
     border-radius: 4px;
@@ -37,7 +37,7 @@
 .active{
     padding: .5em;
     background-color: white;
-    color: #98b524;
+    color: #4b5425;
     border: none;
     border-radius: 4px;
     cursor: pointer;

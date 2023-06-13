@@ -1,21 +1,26 @@
-const getUsers = async () =>{
-
-    const options = {
+const getUsers = async () => {
+    try {
+      const options = {
         method: 'GET',
-        headers:{
-            'Content-Type': 'application/json',
+        headers: {
+          'Content-Type': 'application/json',
         },
+      };
+  
+      const response = await fetch('/api/users', options);
+  
+      if (response.status !== 200) {
+        throw new Error('Error fetching users');
+      }
+  
+      const data = await response.json();
+      console.log('Response:', data);
+      return data;
+    } catch (error) {
+      console.log('Error:', error.message);
+      return null;
     }
-
-
-    const response = await fetch('/api/users', options );
-    if(response.status !== 200){
-        console.log("Error fetching users");
-        return
-    }
-    const data = await response.json();
-    console.log('Response: ', data);
-    return data;
-}
-
-export {getUsers}
+  };
+  
+  export { getUsers };
+  
