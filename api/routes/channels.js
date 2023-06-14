@@ -1,12 +1,14 @@
 import express from "express";
 import { getDb } from "../data/database.js";
+
 import dotenv from "dotenv";
 
 const router = express.Router();
 const db = getDb();
 dotenv.config();
+const secret = process.env.SECRET;
 
-
+// Hämta all Kanaler
 router.get("/", async (req, res) => {
     await db.read();
     const channelNames = db.data.channels.map(
@@ -15,6 +17,8 @@ router.get("/", async (req, res) => {
     res.status(200).send(channelNames);
 });
 
+
+
 // Lägg till kanaler
 
 router.post("/", async (req, res) => {
@@ -22,7 +26,7 @@ router.post("/", async (req, res) => {
     const existedChannels = db.data.channels.map(
         (channel) => Object.keys(channel)[0]
     );
-    const newChannelName = req.body.name;
+    const newChannelName = req.body.name.toLowerCase();
 
     function generateId() {
         let id = Math.floor(Math.random() * 1000);
@@ -34,7 +38,7 @@ router.post("/", async (req, res) => {
 
     if (existedChannels.includes(newChannelName)) {
         res.status(409).send(
-            "Försök igen, detta namn finns redan"
+            "En kanal med detta namn finns redan, försök med ett annat namn."
         );
         return;
     }

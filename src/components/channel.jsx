@@ -9,11 +9,11 @@ import {
     logdin,
 } from "../data/Atom";
 import { useRecoilState } from "recoil";
-import { handleChannelMessages } from "../data/getChannel.Messages";
+import { handleChannelMessages } from "../data/getChannelMessages";
 import "../../style/channel.css";
 
 import { getUsers } from "../data/getUsers.js";
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { getChannelNames } from "../data/getChannelNames";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,12 +26,12 @@ import {
 const ChannelsList = () => {
     const [ setEmptyChannelList] = useRecoilState(channelList);
     const [isActive] = useState(true);
-    const [loggedInUserId, setLoggedInUserId] = useRecoilState(isLoggdInId);
+    const [ setLoggedInUserId] = useRecoilState(isLoggdInId);
     const [chatUsers, setUsers] = useRecoilState(userList);
     const [channelNamesList] = useRecoilState(channelNames);
     const [channelUrl, setChannelUrl] = useState();
-    const [ setActivChannel] = useRecoilState(activeChannelName);
-    const [ setErrorMessage] = useRecoilState(authorizationError);
+    const [activChannel, setActivChannel] = useRecoilState(activeChannelName);
+    const [errorMessage, setErrorMessage] = useRecoilState(authorizationError);
     const [isLogdin] = useRecoilState(logdin);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const ChannelsList = () => {
         const data = await getChannelNames();
         if (data) {
             setChannelUrl(data);
-            console.log("existed:", channelNamesList, "channelNames");
+           
         }
     };
 
@@ -60,14 +60,14 @@ const ChannelsList = () => {
     useEffect(() => {
         getAllUsers();
         existedChannelNames();
-    },);
+    }, []);
 
     const getChannelinfo = async (whichChannel) => {
         try {
             const data = await handleChannelMessages(whichChannel);
             if (!data) {
                 setErrorMessage(true);
-                console.log("You need to login to rewiew the channel");
+                
             }
             setEmptyChannelList(data);
             setActivChannel(whichChannel);
@@ -82,11 +82,8 @@ const ChannelsList = () => {
 
             if (matchingUser) {
                 setLoggedInUserId(matchingUser.name);
-            } else {
-                sessionStorage.setItem("id", "0");
-            }
-
-            console.log("inloggad nu", loggedInUserId);
+            } 
+         
         } catch (error) {
             console.error(error);
         }
