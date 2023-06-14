@@ -1,7 +1,7 @@
 const sessionStorageKey = 'jwt'
 const handleChannelMessages = async (channel) =>{
     window.addEventListener("beforeunload", function() {
-        // Rensa den specifika datan från sessionStorage
+        
         sessionStorage.removeItem("jwt");
       });
     const maybeJwt = sessionStorage.getItem(sessionStorageKey)
@@ -16,10 +16,11 @@ const handleChannelMessages = async (channel) =>{
         options.headers.Authorization = "Bearer: " + maybeJwt
     }
 
-    console.log('/api/channels/' + channel)
-    const response = await fetch('/api/channels/' + channel, options );
+ 
+
+    const response = await fetch('/api/messages/' + channel, options );
     if(response.status !== 200){
-        console.log("Error fetching channels");
+        console.log("Error fetching");
         return
     }
     const data = await response.json();

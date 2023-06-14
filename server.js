@@ -8,7 +8,7 @@ import messagesRouter from "./api/routes/messages.js"
 
 const app = express()
 dotenv.config()
-const port = process.env.PORT || 2065
+const port = process.env.PORT || 3000
 
 //CORS
 app.use( cors() )

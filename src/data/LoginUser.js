@@ -19,7 +19,7 @@ const handleLogin = async (username, password) =>{
     }
 
     const response = await fetch('/api/users/login' , options)
-    if(response.status !== 200){
+    if(response.status !== 401){
         const data = await response.json()
         sessionStorage.setItem(sessionStorageKey, data.token)
         sessionStorage.setItem('id', data.id)

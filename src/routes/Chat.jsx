@@ -66,62 +66,56 @@ const ChatWindow = () => {
                         );
 
                         return (
-                            <div className="chat-window" key={`${channel.userId}-${index}`}>
-                                {channel.userId === loggedInUserId ? (
-                                    <div className="right-main">
-                                        <div className="right-convo-look">
-                                            <div className="right-convo-message">{channel.message}</div>
+        <div className="chat-window" key={`${channel.userId}-${index}`}>
+            {channel.userId === loggedInUserId ? (
+                <div className="right-main">
+                    <div className="right-convo-look">
+                        <div className="right-convo-message">{channel.message}</div>
 
-                                            <div> {hours}:{minutes} {channel.userId} <button type="none" onClick={() => clickEditMessage(channel.timestamp)}
-                                                    className="edit-message"
-                                                ><FontAwesomeIcon size="sm" icon={faPen}/></button>
+                        <div> {hours}:{minutes} {channel.userId} <button type="none" onClick={() => clickEditMessage(channel.timestamp)}
+                        className="edit-message"><FontAwesomeIcon size="sm" icon={faPen}/></button>
 
 
-                                                { showInput && currenttimeStamp ===
-                                                channel.timestamp ? (
-                                                    <div className="chat-input ">
-                                                        <input onChange={(e) => setNewMessage(e.target.value)}
-                                                            type="text"
-                                                            placeholder="Redigera meddelande"
-                                                        />
+                        { showInput && currenttimeStamp === channel.timestamp ? (
+                        <div className="chat-input ">
+                        <input onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Redigera meddelande"/>
 
-                                                        <div className="send-button">
-                                                            <button className="edit-button" onClick={ () => sendNewMessage()}>
+                        <div className="send-button">
+                        <button className="edit-button" onClick={ () => sendNewMessage()}>
                                                                 <FontAwesomeIcon color="white" icon={faPaperPlane} size="2xl"/>
-                                                            </button>
-                                                        </div>
+                        </button>
+                        </div>
                                                         
-                                                        <div className="send-button">
-                                                            <button onClick={ () => setShowInput(false)}>
+                            <div className="send-button">
+                            <button onClick={ () => setShowInput(false)}>
                                                                 <FontAwesomeIcon color="white" icon={faXmark} size="2xl"/>
-                                                            </button>
-                                                        </div>
+                            </button>
+                            </div>
 
-                                                    </div>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="left-main">
-                                        <div className="left-convo-look">
-                                            <div className="left-convo-message">
-                                                {channel.message}
-                                            </div>
+                        </div> ) : null}
+                    </div>
+                </div>
+            </div>
+                ) : (
+            <div className="left-main">
+            <div className="left-convo-look">
+            <div className="left-convo-message">
+                    {channel.message}
+        </div>
 
-                                            <div>
-                                                {channel.userId} {hours}:
-                                                {minutes}
-                                            </div>
-                                        </div>
-                                    </div>
+        <div>
+            {channel.userId} {hours}:
+        {minutes}
+    </div>
+ </div>
+</div>
                                 )}
                             </div>
                         );
                     })}
                 {errorMessage && (
                     <div className="error-message">
-                        <h1>Du behöver vara inloggad för att se innehållet!</h1>
+                        <h1>Logga in Först</h1>
                     </div>
                 )}
             </div>

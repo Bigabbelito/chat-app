@@ -1,16 +1,37 @@
 {
-    "users": [
-      {
-        "id": 0,
-        "name": "Gäst",
-        "password": "Gäst"
-      },
-      {
-        "id": 1,
-        "name": "admin",
-        "password": "password"
-      }
-    ],
-    "channels": []
-  }
-
+  "users": [
+    {
+      "id": 1,
+      "name": "admin",
+      "password": "password"
+    },
+    {
+      "id": 94,
+      "name": "david",
+      "password": "david1"
+    }
+  ],
+  "channels": [
+    {
+      "gaming": []
+    },
+    {
+      "undefined": []
+    },
+    {
+      "undefined": []
+    },
+    {
+      "undefined": []
+    },
+    {
+      "undefined": []
+    },
+    {
+      "undefined": []
+    }
+  ],
+  "messages": [
+    {}
+  ]
+}

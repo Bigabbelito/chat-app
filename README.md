@@ -4,6 +4,8 @@
 
 ### Chappy - Chat-app med API
 
+### Description
+
 ## Chappy är en chat-app med ett API som möjliggör kommunikation och autentisering mellan användare. Detta projekt använder tekniker som Express, Lowdb, JWT-autentisering och REST-API för att implementera grundläggande funktionalitet för meddelanden, användare, autentisering och kanaler.
 
 ### Projektöversikt
@@ -30,5 +32,8 @@
 ## Projektet har publicerats online genom användning av surge.sh, en molnbaserad plattform. Detta gör det möjligt för andra att använda appen via det offentliga API:et.
 
 ## Insomnia används för att testa funktionalitet och säkerhet i API:et.
+
+
+
 
 

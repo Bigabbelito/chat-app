@@ -60,7 +60,7 @@ const ChannelsList = () => {
     useEffect(() => {
         getAllUsers();
         existedChannelNames();
-    },[]);
+    },);
 
     const getChannelinfo = async (whichChannel) => {
         try {

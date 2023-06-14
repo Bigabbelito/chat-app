@@ -17,9 +17,10 @@ const handleSignup = async (username,password) =>{
     const data = await response.json()
     if(data){
         return true
-    }else{
+    }
+    
     return false
-}
+
     
 
 }

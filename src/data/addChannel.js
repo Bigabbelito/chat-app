@@ -14,9 +14,9 @@ const addChannel = async (channelName) =>{
     const response = await fetch("/api/channels", options)
     const data = await response.json()
     if(data){
+        console.log(' Response: ', data);
         return true
     }
-    return false
 
 }
 
