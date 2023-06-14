@@ -9,7 +9,7 @@ import {
     logdin,
 } from "../data/Atom";
 import { useRecoilState } from "recoil";
-import { handleChannelMessages } from "../data/getChannelMessages";
+import { handleChannelMessages } from "../data/getChannel.Messages";
 import "../../style/channel.css";
 
 import { getUsers } from "../data/getUsers.js";
